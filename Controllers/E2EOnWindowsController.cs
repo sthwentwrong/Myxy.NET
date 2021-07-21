@@ -5,55 +5,54 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using Myxy.NET;
+using Myxy.NET.Data;
 
 namespace Myxy.NET.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MetadatasController : ControllerBase
+    public class E2EOnWindowsController : ControllerBase
     {
-        private readonly MyxyContext _context;
+        private readonly MyxyNETContext _context;
 
-        private readonly ILogger<MetadatasController> _logger;
-
-        public MetadatasController(MyxyContext context)
+        public E2EOnWindowsController(MyxyNETContext context)
         {
             _context = context;
         }
 
-        // GET: api/Metadatas
+        // GET: api/E2EOnWindows
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AzDOMetadata>>> GetAzDOMetadata()
+        public async Task<ActionResult<IEnumerable<E2EOnWindows>>> GetE2EOnWindows()
         {
-            return await _context.AzDOMetadata.ToListAsync();
+            return await _context.E2EOnWindows.ToListAsync();
         }
 
-        // GET: api/Metadatas/5
+        // GET: api/E2EOnWindows/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<AzDOMetadata>> GetAzDOMetadata(string id)
+        public async Task<ActionResult<E2EOnWindows>> GetE2EOnWindows(string id)
         {
-            var azDOMetadata = await _context.AzDOMetadata.FindAsync(id);
+            var e2EOnWindows = await _context.E2EOnWindows.FindAsync(id);
 
-            if (azDOMetadata == null)
+            if (e2EOnWindows == null)
             {
                 return NotFound();
             }
 
-            return azDOMetadata;
+            return e2EOnWindows;
         }
 
-        // PUT: api/Metadatas/5
+        // PUT: api/E2EOnWindows/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAzDOMetadata(string id, AzDOMetadata azDOMetadata)
+        public async Task<IActionResult> PutE2EOnWindows(string id, E2EOnWindows e2EOnWindows)
         {
-            if (id != azDOMetadata.Id)
+            if (id != e2EOnWindows.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(azDOMetadata).State = EntityState.Modified;
+            _context.Entry(e2EOnWindows).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +60,7 @@ namespace Myxy.NET.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AzDOMetadataExists(id))
+                if (!E2EOnWindowsExists(id))
                 {
                     return NotFound();
                 }
@@ -74,19 +73,19 @@ namespace Myxy.NET.Controllers
             return NoContent();
         }
 
-        // POST: api/Metadatas
+        // POST: api/E2EOnWindows
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<AzDOMetadata>> PostAzDOMetadata(AzDOMetadata azDOMetadata)
+        public async Task<ActionResult<E2EOnWindows>> PostE2EOnWindows(E2EOnWindows e2EOnWindows)
         {
-            _context.AzDOMetadata.Add(azDOMetadata);
+            _context.E2EOnWindows.Add(e2EOnWindows);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (AzDOMetadataExists(azDOMetadata.Id))
+                if (E2EOnWindowsExists(e2EOnWindows.Id))
                 {
                     return Conflict();
                 }
@@ -96,28 +95,28 @@ namespace Myxy.NET.Controllers
                 }
             }
 
-            return CreatedAtAction("GetAzDOMetadata", new { id = azDOMetadata.Id }, azDOMetadata);
+            return CreatedAtAction("GetE2EOnWindows", new { id = e2EOnWindows.Id }, e2EOnWindows);
         }
 
-        // DELETE: api/Metadatas/5
+        // DELETE: api/E2EOnWindows/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAzDOMetadata(string id)
+        public async Task<IActionResult> DeleteE2EOnWindows(string id)
         {
-            var azDOMetadata = await _context.AzDOMetadata.FindAsync(id);
-            if (azDOMetadata == null)
+            var e2EOnWindows = await _context.E2EOnWindows.FindAsync(id);
+            if (e2EOnWindows == null)
             {
                 return NotFound();
             }
 
-            _context.AzDOMetadata.Remove(azDOMetadata);
+            _context.E2EOnWindows.Remove(e2EOnWindows);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool AzDOMetadataExists(string id)
+        private bool E2EOnWindowsExists(string id)
         {
-            return _context.AzDOMetadata.Any(e => e.Id == id);
+            return _context.E2EOnWindows.Any(e => e.Id == id);
         }
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Myxy.NET.Data;
 
 namespace Myxy.NET
 {
@@ -35,7 +36,7 @@ namespace Myxy.NET
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Myxy.NET", Version = "v1" });
             });
 
-            services.AddDbContext<MyxyContext>(options =>
+            services.AddDbContext<MyxyNETContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("SQLITE_ADMIN")));
 
             services.AddCors(options =>
