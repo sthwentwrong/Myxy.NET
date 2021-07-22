@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8CD9671E-2874-47BD-BEF9-20AAF2619968}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myxy.NET", "src\Myxy.NET\Myxy.NET.csproj", "{343B762F-A538-464B-8394-5F9E79B5A817}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myxy.NET.IdentityClient", "src\Myxy.NET.IdentityClient\Myxy.NET.IdentityClient.csproj", "{76DDDD8E-270A-4BE0-9EB3-60A7C8CAE972}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Myxy.NET.IdentityServer", "src\Myxy.NET.IdentityServer\Myxy.NET.IdentityServer.csproj", "{9A44285E-F059-4E54-BFA5-CC029C71A7A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{343B762F-A538-464B-8394-5F9E79B5A817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{343B762F-A538-464B-8394-5F9E79B5A817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{343B762F-A538-464B-8394-5F9E79B5A817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{343B762F-A538-464B-8394-5F9E79B5A817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76DDDD8E-270A-4BE0-9EB3-60A7C8CAE972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76DDDD8E-270A-4BE0-9EB3-60A7C8CAE972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76DDDD8E-270A-4BE0-9EB3-60A7C8CAE972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76DDDD8E-270A-4BE0-9EB3-60A7C8CAE972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A44285E-F059-4E54-BFA5-CC029C71A7A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A44285E-F059-4E54-BFA5-CC029C71A7A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A44285E-F059-4E54-BFA5-CC029C71A7A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A44285E-F059-4E54-BFA5-CC029C71A7A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{343B762F-A538-464B-8394-5F9E79B5A817} = {8CD9671E-2874-47BD-BEF9-20AAF2619968}
+		{76DDDD8E-270A-4BE0-9EB3-60A7C8CAE972} = {8CD9671E-2874-47BD-BEF9-20AAF2619968}
+		{9A44285E-F059-4E54-BFA5-CC029C71A7A6} = {8CD9671E-2874-47BD-BEF9-20AAF2619968}
+	EndGlobalSection
+EndGlobal

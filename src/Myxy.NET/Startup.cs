@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Myxy.NET.Data;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Myxy.NET
 {
@@ -31,10 +32,31 @@ namespace Myxy.NET
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://localhost:5001";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+
+                });
+
+            services.AddAuthorization(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Myxy.NET", Version = "v1" });
+                options.AddPolicy("ApiScope", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "api1");
+                });
             });
+
+            services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Myxy.NET", Version = "v1" });
+                });
 
             services.AddDbContext<MyxyNETContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("SQLITE_ADMIN")));
@@ -66,11 +88,13 @@ namespace Myxy.NET
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers()
+                    .RequireAuthorization("ApiScope");
             });
         }
     }
