@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize()]
 public class IdentityController : ControllerBase
 {
     private readonly ILogger<IdentityController> _logger;
@@ -20,6 +19,7 @@ public class IdentityController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public IActionResult Get()
     {
         _logger.LogInformation("enter Get in IdentityController");

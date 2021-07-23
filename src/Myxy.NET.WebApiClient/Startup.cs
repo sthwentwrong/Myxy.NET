@@ -34,21 +34,12 @@ namespace Myxy.NET
             services.AddControllers();
              
             services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
+                .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = "https://localhost:5000";
-                    options.RequireHttpsMetadata = true;
-                    options.Audience = "identity.api";
+                    options.RequireHttpsMetadata = false;
+                    options.ApiName = "api1";
                 });
-
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("ApiScope", policy =>
-            //    {
-            //        policy.RequireAuthenticatedUser();
-            //        policy.RequireClaim("scope", "scope1");
-            //    });
-            //});
 
             services.AddSwaggerGen(c =>
                 {
@@ -87,10 +78,10 @@ namespace Myxy.NET
                 app.UseHsts();
             }
 
-            app.UseAuthentication();
-
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

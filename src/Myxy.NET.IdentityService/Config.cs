@@ -18,41 +18,33 @@ namespace IdentityService
                 //new IdentityResources.Address()
             };
 
-        // Block 1: All APIs, I want to protect in my system
-        //public static IEnumerable<ApiResource> GetApis=>
-        //     new ApiResource[]
-        //    {
-        //        new ApiResource("identity.api", "Identity API"),
-        //        new ApiResource("azdo.api","azdo api")
-        //    };
-
-
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("scope1"),
-                new ApiScope("scope2"),
+                new ApiScope("client_scope1"),
             };
+
+        public static IEnumerable<ApiResource> GetApiResourcess =>
+             new ApiResource[]
+            {
+                new ApiResource("api1", "Identity API"){
+                    Scopes={ "client_scope1" }
+                },
+            };
+
 
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
-                //Block 2:  MVC client using hybrid flow
-                new Client
-                {
-                    ClientId = "webclient",
-                    ClientName = "Web Client",
-                    RequireConsent = false,
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-                    ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
+                new Client{
+                    ClientId = "credentials_client",
+                    ClientName = "Client Credentials Client",
 
-                    RedirectUris = { "https://localhost:5001/signin-oidc" },
-                    FrontChannelLogoutUri = "https://localhost:5001/signout-oidc",
-                    PostLogoutRedirectUris = { "https://localhost:5001/signout-callback-oidc" },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256())},
 
-                    AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "identity.api", "scope1" }
-                }
+                    AllowedScopes = { "client_scope1" }
+                },
             };
     }
 }

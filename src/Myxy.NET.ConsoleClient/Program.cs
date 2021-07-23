@@ -24,10 +24,10 @@ namespace Client
             var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
             {
                 Address = disco.TokenEndpoint,
-                ClientId = "webapiclient",
-                ClientSecret = "Secrets",
+                ClientId = "credentials_client",
+                ClientSecret = "511536EF-F270-4058-80CA-1C89C192F69A",
 
-                Scope = "scope1"
+                Scope = "client_scope1"
             });
 
             if (tokenResponse.IsError)
