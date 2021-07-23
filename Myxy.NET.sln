@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31512.422
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8CD9671E-2874-47BD-BEF9-20AAF2619968}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Myxy.NET.WebApiClient", "src\Myxy.NET.WebApiClient\Myxy.NET.WebApiClient.csproj", "{E36BA23E-0341-49CB-A08A-0B70CDB169C8}"
 EndProject

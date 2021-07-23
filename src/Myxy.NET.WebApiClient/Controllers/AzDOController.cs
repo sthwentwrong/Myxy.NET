@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Myxy.NET;
 using Myxy.NET.Data;
 
@@ -15,10 +16,11 @@ namespace Myxy.NET.Controllers
     public class AzDOController : ControllerBase
     {
         private readonly MyxyNETContext _context;
-
-        public AzDOController(MyxyNETContext context)
+        private readonly ILogger<AzDOController> _logger;
+        public AzDOController(MyxyNETContext context, ILogger<AzDOController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/AzDO

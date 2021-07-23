@@ -50,8 +50,8 @@ namespace IdentityService
                 options.EmitStaticAudienceClaim = true;
             })
                 .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                //.AddInMemoryApiResources(Config.GetApis)
+                //.AddInMemoryApiScopes(Config.ApiScopes)
+                .AddInMemoryApiResources(Config.GetApis)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
 

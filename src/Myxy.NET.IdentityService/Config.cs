@@ -23,16 +23,16 @@ namespace IdentityService
              new ApiResource[]
             {
                 new ApiResource("identity.api", "Identity API"),
-                new ApiResource("test.api","Test API")
+                new ApiResource("azdo.api","azdo api")
             };
 
 
-        public static IEnumerable<ApiScope> ApiScopes =>
-            new ApiScope[]
-            {
-                new ApiScope("scope1"),
-                new ApiScope("scope2"),
-            };
+        //public static IEnumerable<ApiScope> ApiScopes =>
+        //    new ApiScope[]
+        //    {
+        //        new ApiScope("scope1"),
+        //        new ApiScope("scope2"),
+        //    };
 
         public static IEnumerable<Client> Clients =>
             new Client[]
@@ -52,14 +52,6 @@ namespace IdentityService
 
                     AllowOfflineAccess = true,
                     AllowedScopes = { "openid", "profile", "identity.api","test.api" }
-                },
-                new Client
-                { 
-                    ClientId="webapiclient",
-                    ClientName= "WebApi Client",
-                    AllowedGrantTypes= GrantTypes.ClientCredentials,
-                    ClientSecrets = { new Secret("Secrets".Sha256()) },
-                    AllowedScopes = { "scope1" }
                 }
             };
     }
