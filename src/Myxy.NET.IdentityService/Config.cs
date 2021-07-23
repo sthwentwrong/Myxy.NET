@@ -19,20 +19,20 @@ namespace IdentityService
             };
 
         // Block 1: All APIs, I want to protect in my system
-        public static IEnumerable<ApiResource> GetApis=>
-             new ApiResource[]
-            {
-                new ApiResource("identity.api", "Identity API"),
-                new ApiResource("azdo.api","azdo api")
-            };
-
-
-        //public static IEnumerable<ApiScope> ApiScopes =>
-        //    new ApiScope[]
+        //public static IEnumerable<ApiResource> GetApis=>
+        //     new ApiResource[]
         //    {
-        //        new ApiScope("scope1"),
-        //        new ApiScope("scope2"),
+        //        new ApiResource("identity.api", "Identity API"),
+        //        new ApiResource("azdo.api","azdo api")
         //    };
+
+
+        public static IEnumerable<ApiScope> ApiScopes =>
+            new ApiScope[]
+            {
+                new ApiScope("scope1"),
+                new ApiScope("scope2"),
+            };
 
         public static IEnumerable<Client> Clients =>
             new Client[]
@@ -51,7 +51,7 @@ namespace IdentityService
                     PostLogoutRedirectUris = { "https://localhost:5001/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "identity.api","test.api" }
+                    AllowedScopes = { "openid", "profile", "identity.api", "scope1" }
                 }
             };
     }
