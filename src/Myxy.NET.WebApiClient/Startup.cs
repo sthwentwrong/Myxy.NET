@@ -15,12 +15,12 @@ using Microsoft.EntityFrameworkCore;
 using Myxy.NET.Data;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using IdentityServer4.AccessTokenValidation;
 
 namespace Myxy.NET
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,14 +32,16 @@ namespace Myxy.NET
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-             
-            services.AddAuthentication("Bearer")
+
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "https://localhost:5000";
+                    options.Authority = "http://localhost:6001";
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "api1";
+                    options.ApiSecret = "apipwd";
                 });
+            services.AddAuthorization();
 
             services.AddSwaggerGen(c =>
                 {
@@ -49,28 +51,25 @@ namespace Myxy.NET
             services.AddDbContext<MyxyNETContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("SQLITE_ADMIN")));
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: MyAllowSpecificOrigins, 
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:3000")
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    });
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddDefaultPolicy(
+            //        builder =>
+            //        {
+            //            builder.WithOrigins("http://localhost:5003")
+            //                .AllowAnyHeader()
+            //                .AllowAnyMethod()
+            //                .AllowCredentials();
+            //        });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(MyAllowSpecificOrigins);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Myxy.NET v1"));
             }
             else
             {
@@ -78,18 +77,25 @@ namespace Myxy.NET
                 app.UseHsts();
             }
 
+            //app.UseCors();
+
             app.UseHttpsRedirection();
             app.UseRouting();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDefaultControllerRoute();
+                //endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Myxy.NET v1"));
         }
     }
 }

@@ -4,3 +4,9 @@
 ## Identity service: https://localhost:5000
 ## WebApiClient: https://localhost:5001
 ### Tools: https://jwt.ms/
+
+# --------------------------------------------------------------------------
+## dotnet ef migrations add InitialIdentityServerPersistedGrantDbMigration -c PersistedGrantDbContext -o Data/Migrations/PersistedGrantDb
+## dotnet ef migrations add InitialIdentityServerConfigurationDbMigration -c ConfigurationDbContext -o Data/Migrations/ConfigurationDb
+### update-database -c PersistedGrantDbContext 
+### update-database -c ConfigurationDbContext

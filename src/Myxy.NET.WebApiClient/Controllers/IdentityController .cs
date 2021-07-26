@@ -18,7 +18,7 @@ public class IdentityController : ControllerBase
         _logger.LogInformation("enter IdentityController constructor");
     }
 
-    [HttpGet]
+    [HttpGet("getUserClaims")]
     [Authorize]
     public IActionResult Get()
     {
