@@ -55,19 +55,8 @@ namespace Myxy.NET.Portal.Controllers
                 return Json(new { msg = "accesstoken fetch failed." });
             }
 
-            // client.SetBearerToken(accesstoken);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            //var httpResponse = await client.GetAsync("http://localhost:6002/api/identity/GetUserClaims");
-            //var result = await httpResponse.Content.ReadAsStringAsync();
-            //if (!httpResponse.IsSuccessStatusCode)
-            //{
-            //    return Json(new { msg = "请求 api1 失败。", error = result });
-            //}
-            //return Json(new
-            //{
-            //    msg = "成功",
-            //    data = JsonConvert.DeserializeObject(result)
-            //});
+  
             var content = await client.GetStringAsync("http://localhost:6002/api/identity/GetUserClaims");
 
             ViewBag.Json = JArray.Parse(content).ToString();

@@ -1,23 +1,40 @@
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
-using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Myxy.NET.IDS4.Data;
 
-namespace Myxy.NET.IDS4
+namespace Myxy.NET.IdS4
 {
     public class Program
     {
         public static int Main(string[] args)
         {
-            InitSerilog();
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                // uncomment to write to Azure diagnostics stream
+                //.WriteTo.File(
+                //    @"D:\home\LogFiles\Application\identityserver.txt",
+                //    fileSizeLimitBytes: 1_000_000,
+                //    rollOnFileSizeLimit: true,
+                //    shared: true,
+                //    flushToDiskInterval: TimeSpan.FromSeconds(1))
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
+                .CreateLogger();
+
             try
             {
                 var seed = args.Contains("/seed");
@@ -30,8 +47,16 @@ namespace Myxy.NET.IDS4
 
                 if (seed)
                 {
+                    var config = host.Services.GetRequiredService<IConfiguration>();
                     Log.Information("Seeding database...");
-                    DatabaseInitializer.EnsureSeedData(host.Services);
+                    Log.Information("Seeding aspId data...");
+                    var connectionString = config.GetConnectionString("DefaultConnection");
+                    SeedData.Ensure_AspId_SeedData(connectionString);
+                    Log.Information("Seeding aspId done");
+                    Log.Information("Seeding IdS4 data...");
+                    connectionString = config.GetConnectionString("DefaultIdSConnection");
+                    SeedData.Ensure_IdS4_SeedData(connectionString);
+                    Log.Information("Seeding IdS4 done");
                     Log.Information("Done seeding database.");
                     return 0;
                 }
@@ -58,25 +83,5 @@ namespace Myxy.NET.IDS4
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
-        public static void InitSerilog()
-        {
-            var template = "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}";
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
-                .MinimumLevel.Override("System", LogEventLevel.Warning)
-                .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
-                .Enrich.FromLogContext()
-                .WriteTo.File(
-                    @"Myxy.NET.IDS4.log",
-                    fileSizeLimitBytes: 1_000_000,
-                    rollOnFileSizeLimit: true,
-                    shared: true,
-                    flushToDiskInterval: TimeSpan.FromSeconds(1))
-                .WriteTo.Console(outputTemplate: template, theme: AnsiConsoleTheme.Code)
-                .CreateLogger();
-        }
     }
 }

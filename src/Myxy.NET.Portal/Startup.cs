@@ -36,7 +36,7 @@ namespace Myxy.NET.Portal
             .AddCookie("Cookies")
             .AddOpenIdConnect("oidc", options =>
             {
-                options.Authority = "http://localhost:6001";
+                options.Authority = "https://localhost:8001";
                 options.RequireHttpsMetadata = false;
                 options.ClientId = "code_client";
                 options.ClientSecret = "511536EF-F270-4058-80CA-1C89C192F69A";
@@ -66,9 +66,11 @@ namespace Myxy.NET.Portal
             app.UseStaticFiles();
 
             app.UseRouting();
+
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
