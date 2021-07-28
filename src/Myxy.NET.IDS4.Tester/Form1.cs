@@ -12,7 +12,7 @@ using IdentityModel.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Myxy.NET.ID4.Tester
+namespace Myxy.NET.IdS4.Tester
 {
     public partial class Form1 : Form
     {

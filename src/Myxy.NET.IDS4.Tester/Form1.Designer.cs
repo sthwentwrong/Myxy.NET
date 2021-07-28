@@ -1,5 +1,5 @@
 ﻿
-namespace Myxy.NET.ID4.Tester
+namespace Myxy.NET.IdS4.Tester
 {
     partial class Form1
     {
@@ -125,7 +125,7 @@ namespace Myxy.NET.ID4.Tester
             this.txtIdentityServer.Name = "txtIdentityServer";
             this.txtIdentityServer.Size = new System.Drawing.Size(257, 22);
             this.txtIdentityServer.TabIndex = 4;
-            this.txtIdentityServer.Text = "https://localhost:5001";
+            this.txtIdentityServer.Text = "https://localhost:8001";
             // 
             // label4
             // 
